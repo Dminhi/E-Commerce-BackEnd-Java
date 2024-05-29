@@ -2,23 +2,24 @@ package com.ra.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Entity
+@Builder
 public class Config {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String configName;
     private String configValue;
-    @OneToOne(mappedBy = "config", fetch = FetchType.EAGER)
+    private boolean status = true;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "productDetail_id", referencedColumnName = "id")
     @JsonIgnore
     private ProductDetail productDetail;
 }

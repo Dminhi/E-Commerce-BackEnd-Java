@@ -1,8 +1,8 @@
 package com.ra.controller.admin;
 
 import com.ra.exception.CustomException;
-import com.ra.model.dto.request.CategoryRequestDTO;
-import com.ra.service.category.ICategoryService;
+import com.ra.model.dto.request.BrandRequestDTO;
+import com.ra.service.brand.IBrandService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,26 +12,30 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api.myservice.com/v1/admin/brands")
 public class BrandController {
     @Autowired
-    private ICategoryService categoryService;
+    private IBrandService brandService;
     @GetMapping("")
-    public ResponseEntity<?> getCategory(@RequestParam(name = "keyword", required = false) String keyword,
+    public ResponseEntity<?> getBrand(@RequestParam(name = "keyword", required = false) String keyword,
                                          @RequestParam(defaultValue = "5", name = "limit") int limit,
                                          @RequestParam(defaultValue = "0", name = "page") int page,
                                          @RequestParam(defaultValue = "id", name = "sort") String sort,
                                          @RequestParam(defaultValue = "asc", name = "order") String order) throws CustomException {
-        return categoryService.getCategory(keyword, page, limit, sort, order);
+        return brandService.getBrand(keyword, page, limit, sort, order);
 
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCategoryById(@PathVariable Long id) throws CustomException {
-        return categoryService.getCategoryById(id);
+    public ResponseEntity<?> getBrandById(@PathVariable Long id) throws CustomException {
+        return brandService.getBrandById(id);
     }
     @PostMapping("")
-    public ResponseEntity<?> addCategory ( @Valid @ModelAttribute("category")  CategoryRequestDTO categoryRequestDTO) throws CustomException {
-        return categoryService.save(categoryRequestDTO);
+    public ResponseEntity<?> addBrand ( @Valid @ModelAttribute("category") BrandRequestDTO brandRequestDTO) throws CustomException {
+        return brandService.save(brandRequestDTO);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> editCategory (@PathVariable Long id, @Valid @ModelAttribute("category")  CategoryRequestDTO categoryRequestDTO) throws CustomException {
-        return categoryService.edit(id,categoryRequestDTO);
+    public ResponseEntity<?> editCategory (@PathVariable Long id, @Valid @ModelAttribute("category")  BrandRequestDTO brandRequestDTO) throws CustomException {
+        return brandService.edit(id,brandRequestDTO);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> changeStatus (@PathVariable Long id) throws CustomException {
+        return brandService.changeStatus(id);
     }
 }

@@ -170,4 +170,15 @@ private UploadService uploadService;
                 categoryPage
         ), HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<?> changeStatus(Long id) {
+        iCategoryRepository.changStatus(id);
+        return new ResponseEntity<>(new ResponseMapper<>(
+                HttpResponse.SUCCESS,
+                HttpStatus.OK.value(),
+                HttpStatus.OK.name(),
+                "categoryStatus change successfully !!\""
+        ), HttpStatus.OK);
+    }
 }

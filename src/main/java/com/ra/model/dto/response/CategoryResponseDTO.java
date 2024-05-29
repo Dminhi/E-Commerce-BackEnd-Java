@@ -5,6 +5,7 @@ import com.ra.model.entity.Category;
 import com.ra.model.entity.Product;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -18,6 +19,7 @@ public class CategoryResponseDTO {
     private String description;
     private String image;
     private boolean status;
+    private LocalDate createdAt;
     @JsonIgnore
     private Set<Product> products;
     public CategoryResponseDTO(Category category) {
@@ -26,6 +28,7 @@ public class CategoryResponseDTO {
         this.description = category.getDescription();
         this.image = category.getImage();
         this.status = category.isStatus();
+        this.createdAt = category.getCreatedAt();
         this.products = category.getProducts();
 
     } }

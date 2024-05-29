@@ -15,6 +15,7 @@ public class Color {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String colorName;
+    private boolean status;
     @OneToOne(mappedBy = "color", fetch = FetchType.EAGER)
     @JsonIgnore
     private ProductDetail productDetail;
