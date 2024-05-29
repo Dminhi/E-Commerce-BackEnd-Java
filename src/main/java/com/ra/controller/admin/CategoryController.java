@@ -42,4 +42,12 @@ public class CategoryController {
     public ResponseEntity<?> editCategory (@PathVariable Long id, @Valid @ModelAttribute("category")  CategoryRequestDTO categoryRequestDTO) throws CustomException {
         return categoryService.edit(id,categoryRequestDTO);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCate(@PathVariable Long id) throws CustomException {
+        CategoryResponseDTO deleteCate = categoryService.findById(id);
+        categoryService.changeStatus(id);
+        Map<String, CategoryResponseDTO> response = new HashMap<>();
+        response.put("Delete Category successfully ", deleteCate);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

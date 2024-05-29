@@ -133,15 +133,16 @@ private UploadService uploadService;
                 .description(categoryRequestDTO.getDescription())
                 .image(imageUrl)
                 .status(categoryRequestDTO.isStatus())
+                .createdAt(LocalDate.now())
                 .build());
-        Map<String, Category> responseDTOMap = new HashMap<>();
-        responseDTOMap.put("Edit category successfully", category);
+//        Map<String, Category> responseDTOMap = new HashMap<>();
+//        responseDTOMap.put("Edit category successfully", category);
         return new ResponseEntity<>(
                 new ResponseMapper<>(
                         HttpResponse.SUCCESS,
                         HttpStatus.CREATED.value(),
                         HttpStatus.CREATED.name(),
-                        responseDTOMap), HttpStatus.CREATED);
+                        category), HttpStatus.CREATED);
 
     }
 
@@ -169,5 +170,10 @@ private UploadService uploadService;
                 HttpStatus.OK.name(),
                 categoryPage
         ), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> changeStatus(Long id) throws CustomException {
+        return null;
     }
 }

@@ -20,7 +20,6 @@ import java.util.Map;
 
 @Slf4j
 public class CustomDeniedHandler implements AccessDeniedHandler {
-
         @Override
         public void handle(HttpServletRequest request,
                 HttpServletResponse response,

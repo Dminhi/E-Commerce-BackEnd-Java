@@ -20,4 +20,6 @@ public interface ICategoryService {
     ResponseEntity<?> edit(Long id, CategoryRequestDTO categoryRequestDTO) throws CustomException;
     CategoryResponseDTO findById(Long id) throws CustomException;
     ResponseEntity<?> getCategoryById(Long id) throws CustomException;
+    ResponseEntity<?> changeStatus(Long id) throws CustomException;
+
 }
