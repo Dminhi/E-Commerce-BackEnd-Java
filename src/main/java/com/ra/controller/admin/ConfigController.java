@@ -36,7 +36,7 @@ public class ConfigController {
     public ResponseEntity<?> editConfig (@PathVariable Long id, @Valid @RequestBody  ConfigRequestDTO configRequestDTO) throws CustomException {
         return configService.edit(id,configRequestDTO);
     }
-    @DeleteMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> changeStatus (@PathVariable Long id) throws CustomException {
         return configService.changeStatus(id);
     }

@@ -6,6 +6,7 @@ import com.ra.model.dto.mapper.PageDataDTO;
 import com.ra.model.dto.mapper.ResponseMapper;
 import com.ra.model.dto.request.CategoryRequestDTO;
 import com.ra.model.dto.response.CategoryResponseDTO;
+import com.ra.repository.ICategoryRepository;
 import com.ra.service.category.ICategoryService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,8 @@ import java.util.Map;
 public class CategoryController {
     @Autowired
     private ICategoryService categoryService;
+    @Autowired
+    private ICategoryRepository categoryRepository;
     @GetMapping("")
     public ResponseEntity<?> getCategory(@RequestParam(name = "keyword", required = false) String keyword,
                                          @RequestParam(defaultValue = "5", name = "limit") int limit,
@@ -34,6 +37,10 @@ public class CategoryController {
     public ResponseEntity<?> getCategoryById(@PathVariable Long id) throws CustomException {
         return categoryService.getCategoryById(id);
     }
+    @GetMapping("/categoryName")
+    public Boolean checkName(@RequestParam(name = "keyword", required = false) String keyword) throws CustomException {
+        return categoryRepository.findByCategoryName(keyword);
+    }
     @PostMapping("")
     public ResponseEntity<?> addCategory ( @Valid @ModelAttribute("category")  CategoryRequestDTO categoryRequestDTO) throws CustomException {
         return categoryService.save(categoryRequestDTO);
@@ -42,7 +49,7 @@ public class CategoryController {
     public ResponseEntity<?> editCategory (@PathVariable Long id, @Valid @ModelAttribute("category")  CategoryRequestDTO categoryRequestDTO) throws CustomException {
         return categoryService.edit(id,categoryRequestDTO);
     }
-    @DeleteMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> changeStatus (@PathVariable Long id) throws CustomException {
         return categoryService.changeStatus(id);
     }

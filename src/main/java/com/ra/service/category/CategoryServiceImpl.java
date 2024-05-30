@@ -132,6 +132,7 @@ private UploadService uploadService;
                 .categoryName(categoryRequestDTO.getCategoryName())
                 .description(categoryRequestDTO.getDescription())
                 .image(imageUrl)
+                        .createdAt(editCategoryResponseDTO.getCreatedAt())
                 .status(categoryRequestDTO.isStatus())
                 .build());
         Map<String, Category> responseDTOMap = new HashMap<>();
@@ -155,6 +156,7 @@ private UploadService uploadService;
                 .description(category.getDescription())
                 .image(category.getImage())
                 .status(category.isStatus())
+                .createdAt(category.getCreatedAt())
                 .products(category.getProducts())
                 .build()
                 ;

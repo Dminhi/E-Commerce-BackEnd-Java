@@ -26,6 +26,7 @@ public class BrandController {
     public ResponseEntity<?> getBrandById(@PathVariable Long id) throws CustomException {
         return brandService.getBrandById(id);
     }
+
     @PostMapping("")
     public ResponseEntity<?> addBrand ( @Valid @ModelAttribute("category") BrandRequestDTO brandRequestDTO) throws CustomException {
         return brandService.save(brandRequestDTO);
@@ -34,7 +35,7 @@ public class BrandController {
     public ResponseEntity<?> editCategory (@PathVariable Long id, @Valid @ModelAttribute("category")  BrandRequestDTO brandRequestDTO) throws CustomException {
         return brandService.edit(id,brandRequestDTO);
     }
-    @DeleteMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> changeStatus (@PathVariable Long id) throws CustomException {
         return brandService.changeStatus(id);
     }

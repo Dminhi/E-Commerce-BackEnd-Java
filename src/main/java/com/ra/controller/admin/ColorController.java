@@ -35,7 +35,7 @@ public class ColorController {
     public ResponseEntity<?> editConfig (@PathVariable Long id, @Valid @RequestBody  ColorRequestDTO colorRequestDTO) throws CustomException {
         return colorService.edit(id,colorRequestDTO);
     }
-    @DeleteMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> changeStatus (@PathVariable Long id) throws CustomException {
         return colorService.changeStatus(id);
     }
