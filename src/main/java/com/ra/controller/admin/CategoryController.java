@@ -49,6 +49,7 @@ public class CategoryController {
     public ResponseEntity<?> editCategory (@PathVariable Long id, @Valid @ModelAttribute("category")  CategoryRequestDTO categoryRequestDTO) throws CustomException {
         return categoryService.edit(id,categoryRequestDTO);
     }
+
     @PatchMapping("/{id}")
     public ResponseEntity<?> changeStatus (@PathVariable Long id) throws CustomException {
         return categoryService.changeStatus(id);

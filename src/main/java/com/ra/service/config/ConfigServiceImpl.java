@@ -1,5 +1,6 @@
 package com.ra.service.config;
 
+<<<<<<< HEAD
 import com.ra.exception.CustomException;
 import com.ra.model.dto.mapper.HttpResponse;
 import com.ra.model.dto.mapper.PageDataDTO;
@@ -167,4 +168,12 @@ private IConfigRepository configRepository;
                 "ConfigStatus change successfully !!\""
         ), HttpStatus.OK);
     }
+=======
+import org.springframework.stereotype.Service;
+
+@Service
+public class ConfigServiceImpl implements IConfigService {
+
+
+>>>>>>> 0d7ce33144a48cd35cc8f29161187665f503c3bc
 }

@@ -21,5 +21,6 @@ public interface ICategoryService {
     CategoryResponseDTO findById(Long id) throws CustomException;
     ResponseEntity<?> getCategoryById(Long id) throws CustomException;
 
-    ResponseEntity<?> changeStatus(Long id);
+    ResponseEntity<?> changeStatus(Long id) throws CustomException;
+
 }
