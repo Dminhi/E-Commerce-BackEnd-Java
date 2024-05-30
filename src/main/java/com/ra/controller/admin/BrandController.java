@@ -2,6 +2,7 @@ package com.ra.controller.admin;
 
 import com.ra.exception.CustomException;
 import com.ra.model.dto.request.BrandRequestDTO;
+import com.ra.service.brand.IBrandService;
 import com.ra.model.dto.request.CategoryRequestDTO;
 import com.ra.service.brand.IBrandService;
 import com.ra.service.category.ICategoryService;
@@ -25,15 +26,26 @@ public class BrandController {
 
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCategoryById(@PathVariable Long id) throws CustomException {
+
+    public ResponseEntity<?> getBrandById(@PathVariable Long id) throws CustomException {
+
         return brandService.getBrandById(id);
     }
+
     @PostMapping("")
-    public ResponseEntity<?> addCategory ( @Valid @ModelAttribute("category")  BrandRequestDTO brandRequestDTO) throws CustomException {
+
+    public ResponseEntity<?> addBrand ( @Valid @ModelAttribute("category") BrandRequestDTO brandRequestDTO) throws CustomException {
+
         return brandService.save(brandRequestDTO);
     }
     @PutMapping("/{id}")
     public ResponseEntity<?> editCategory (@PathVariable Long id, @Valid @ModelAttribute("category")  BrandRequestDTO brandRequestDTO) throws CustomException {
         return brandService.edit(id,brandRequestDTO);
+
+    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> changeStatus (@PathVariable Long id) throws CustomException {
+        return brandService.changeStatus(id);
+
     }
 }

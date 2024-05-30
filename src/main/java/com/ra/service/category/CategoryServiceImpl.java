@@ -132,6 +132,7 @@ private UploadService uploadService;
                 .categoryName(categoryRequestDTO.getCategoryName())
                 .description(categoryRequestDTO.getDescription())
                 .image(imageUrl)
+                        .createdAt(editCategoryResponseDTO.getCreatedAt())
                 .status(categoryRequestDTO.isStatus())
                 .createdAt(LocalDate.now())
                 .build());
@@ -156,6 +157,7 @@ private UploadService uploadService;
                 .description(category.getDescription())
                 .image(category.getImage())
                 .status(category.isStatus())
+                .createdAt(category.getCreatedAt())
                 .products(category.getProducts())
                 .build()
                 ;
@@ -173,7 +175,14 @@ private UploadService uploadService;
     }
 
     @Override
-    public ResponseEntity<?> changeStatus(Long id) throws CustomException {
-        return null;
+    public ResponseEntity<?> changeStatus(Long id) {
+        iCategoryRepository.changStatus(id);
+        return new ResponseEntity<>(new ResponseMapper<>(
+                HttpResponse.SUCCESS,
+                HttpStatus.OK.value(),
+                HttpStatus.OK.name(),
+                "categoryStatus change successfully !!\""
+        ), HttpStatus.OK);
+
     }
 }

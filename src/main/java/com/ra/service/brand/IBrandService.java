@@ -21,4 +21,6 @@ public interface IBrandService {
     ResponseEntity<?> edit(Long id, BrandRequestDTO brandRequestDTO) throws CustomException;
     BrandResponseDTO findById(Long id) throws CustomException;
     ResponseEntity<?> getBrandById(Long id) throws CustomException;
+
+    ResponseEntity<?> changeStatus(Long id);
 }

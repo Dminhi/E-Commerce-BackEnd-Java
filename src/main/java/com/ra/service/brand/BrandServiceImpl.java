@@ -168,4 +168,15 @@ public class BrandServiceImpl implements IBrandService{
                 categoryPage
         ), HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<?> changeStatus(Long id) {
+        brandRepository.changStatus(id);
+        return new ResponseEntity<>(new ResponseMapper<>(
+                HttpResponse.SUCCESS,
+                HttpStatus.OK.value(),
+                HttpStatus.OK.name(),
+                "BrandStatus change successfully !!\""
+        ), HttpStatus.OK);
+    }
 }

@@ -20,7 +20,6 @@ public class Product {
     private String sku;
     private String productName;
     private String description;
-    private int stock;
     private LocalDate createdAt;
     private boolean status;
     private LocalDate updatedAt;

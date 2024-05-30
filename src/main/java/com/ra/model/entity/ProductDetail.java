@@ -1,10 +1,13 @@
 package com.ra.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,14 +20,16 @@ public class ProductDetail {
     private Long id;
     private double unitPrice;
     private String image;
+    private int stock;
     @OneToOne
     @JoinColumn(name = "color_id", referencedColumnName = "id")
     private Color color;
-    @OneToOne
-    @JoinColumn(name = "config_id", referencedColumnName = "id")
-    private Config config;
-    @ManyToOne
-    @JoinColumn(name = "product", referencedColumnName = "id")
-    private Product product;
 
+    @OneToMany(mappedBy = "productDetail", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Set<Config> configs;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private Product product;
 }
