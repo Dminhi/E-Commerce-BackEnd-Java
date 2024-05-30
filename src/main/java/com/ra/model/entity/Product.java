@@ -23,6 +23,7 @@ public class Product {
     private LocalDate createdAt;
     private boolean status;
     private LocalDate updatedAt;
+    private String image;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;

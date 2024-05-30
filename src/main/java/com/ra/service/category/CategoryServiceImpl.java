@@ -185,4 +185,10 @@ private UploadService uploadService;
         ), HttpStatus.OK);
 
     }
+
+    @Override
+    public Category findCategoryByCategoryName(String categoryName) throws CustomException {
+
+        return iCategoryRepository.findCategoryByCategoryName(categoryName);
+    }
 }

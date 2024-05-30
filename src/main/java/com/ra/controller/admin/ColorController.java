@@ -2,9 +2,7 @@ package com.ra.controller.admin;
 
 import com.ra.exception.CustomException;
 import com.ra.model.dto.request.ColorRequestDTO;
-import com.ra.model.dto.request.ConfigRequestDTO;
 import com.ra.service.color.IColorService;
-import com.ra.service.config.IConfigServiceImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

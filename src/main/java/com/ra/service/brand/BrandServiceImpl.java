@@ -179,4 +179,9 @@ public class BrandServiceImpl implements IBrandService{
                 "BrandStatus change successfully !!\""
         ), HttpStatus.OK);
     }
+    @Override
+    public Brand findBrandByBrandName(String brandName) throws CustomException {
+
+        return brandRepository.findBrandByBrandName(brandName);
+    }
 }

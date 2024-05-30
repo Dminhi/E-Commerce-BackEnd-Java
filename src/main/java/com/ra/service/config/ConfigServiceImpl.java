@@ -6,10 +6,7 @@ import com.ra.model.dto.mapper.HttpResponse;
 import com.ra.model.dto.mapper.PageDataDTO;
 import com.ra.model.dto.mapper.ResponseMapper;
 import com.ra.model.dto.request.ConfigRequestDTO;
-import com.ra.model.dto.response.CategoryResponseDTO;
 import com.ra.model.dto.response.ConfigResponseDTO;
-import com.ra.model.dto.response.ConfigResponseDTO;
-import com.ra.model.entity.Category;
 import com.ra.model.entity.Config;
 import com.ra.repository.IConfigRepository;
 import com.ra.service.UploadService;
@@ -22,13 +19,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
-public class ConfigServiceImpl implements IConfigServiceImpl{
+public class ConfigServiceImpl implements IConfigService {
 @Autowired
 private IConfigRepository configRepository;
     @Autowired

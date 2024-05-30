@@ -22,4 +22,5 @@ public class Config {
     @JoinColumn(name = "productDetail_id", referencedColumnName = "id")
     @JsonIgnore
     private ProductDetail productDetail;
+
 }
