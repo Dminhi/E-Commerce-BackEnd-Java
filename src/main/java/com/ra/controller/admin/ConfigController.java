@@ -3,7 +3,7 @@ package com.ra.controller.admin;
 
 import com.ra.exception.CustomException;
 import com.ra.model.dto.request.ConfigRequestDTO;
-import com.ra.service.config.IConfigServiceImpl;
+import com.ra.service.config.IConfigService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api.myservice.com/v1/admin/configs")
 public class ConfigController {
     @Autowired
-    private IConfigServiceImpl configService;
+    private IConfigService configService;
     @GetMapping("")
     public ResponseEntity<?> getConfig(@RequestParam(name = "keyword", required = false) String keyword,
                                          @RequestParam(defaultValue = "5", name = "limit") int limit,

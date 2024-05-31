@@ -1,6 +1,8 @@
 package com.ra.repository;
 
+import com.ra.model.entity.Category;
 import com.ra.model.entity.Product;
+import com.ra.model.entity.ProductDetail;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,17 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Transactional
-public interface IProductRepository extends JpaRepository<Product,Long> {
-    Page<Product> findProductByProductName(String name, Pageable pageable);
+public interface IProductDetailRepository extends JpaRepository<ProductDetail,Long> {
+    Page<ProductDetail> findProductDetailByProductDetailName(String name, Pageable pageable);
+    boolean existsByProductDetailName(String productDetailName);
+    Page<ProductDetail> findAllByProductDetailNameContainingIgnoreCase( String name,Pageable pageable);
 
-    Page<Product> findAllByProductNameContainingIgnoreCase( String name,Pageable pageable);
-
-    boolean existsByProductName(String name);
-    List<Product> findAllByStatus(boolean status);
     @Modifying
     @Query("update Product p set p.status=case when p.status = true then false else true end where p.id=?1")
     void changeStatus(Long id);
-    @Modifying
-    @Query("SELECT p FROM Product p ORDER BY p.createdAt DESC")
-    List<Product> findByOrderByCreatedAtDesc();
+    List<ProductDetail> findAllByStatus(boolean status);
 }
