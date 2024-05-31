@@ -1,8 +1,6 @@
 package com.ra.service.userService;
 
-import com.ra.exception.DataNotFound;
-import com.ra.exception.NotFoundException;
-import com.ra.exception.RequestErrorException;
+import com.ra.exception.*;
 import com.ra.model.dto.request.AccountEditPassword;
 import com.ra.model.dto.request.AccountEditRequest;
 import com.ra.model.dto.request.FormLogin;
@@ -17,9 +15,11 @@ import com.ra.repository.IRoleRepository;
 import com.ra.repository.IUserRepository;
 import com.ra.security.jwt.JWTProvider;
 import com.ra.security.principle.UserDetailsCustom;
+import com.ra.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -35,7 +35,8 @@ import java.util.*;
 public class UserServiceImpl implements IUserService{
     @Autowired
     private IRoleRepository iRoleRepository;
-
+    @Autowired
+    private UploadService uploadService;
     @Autowired
     private AuthenticationManager manager;
     @Autowired
@@ -45,10 +46,18 @@ public class UserServiceImpl implements IUserService{
     @Autowired
     private IUserRepository userRepository;
     @Override
-    public boolean register(FormRegister formRegister) {
+    public boolean register(FormRegister formRegister) throws CustomException {
+        if(userRepository.existsByUsername(formRegister.getUsername())) {
+                throw new CustomException("Username has been already existed!", HttpStatus.CONFLICT);
+        }
+        if(userRepository.existsByEmail(formRegister.getEmail())) {
+            throw new CustomException("Email has been already existed!", HttpStatus.CONFLICT);
+        }
         User user = User.builder()
                 .email(formRegister.getEmail())
+                .avatar("https://upload.wikimedia.org/wikipedia/commons/1/1e/Default-avatar.jpg?20160314221008")
                 .username(formRegister.getUsername())
+                .createdAt(LocalDate.now())
                 .password(passwordEncoder.encode(formRegister.getPassword()))
                 .status(true)
                 .build();
@@ -80,17 +89,22 @@ public class UserServiceImpl implements IUserService{
     }
 
     @Override
-    public JWTResponse login(FormLogin formLogin) {
-        // xac thực username vaf password
+    public JWTResponse login(FormLogin formLogin) throws NotFoundException, AccountLockedException {
+        // xac thực username va password
         Authentication authentication = null;
         try {
-           authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(formLogin.getUsername(),formLogin.getPassword()));
-        }catch (AuthenticationException e){
-            throw new RuntimeException("username or password incorrect");
+            authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(formLogin.getUsername(), formLogin.getPassword()));
+        } catch (AuthenticationException e) {
+            throw new NotFoundException("username or password incorrect");
         }
         UserDetailsCustom detailsCustom = (UserDetailsCustom) authentication.getPrincipal();
+        if (!detailsCustom.isStatus()) {
+            throw new AccountLockedException("account is locked");
+        }
         String accessToken = jwtProvider.generateAccessToken(detailsCustom);
         return JWTResponse.builder()
+                .phone(detailsCustom.getPhone())
+                .avatar(detailsCustom.getAvatar())
                 .email(detailsCustom.getEmail())
                 .fullName(detailsCustom.getFullName())
                 .roleSet(detailsCustom.getAuthorities())
@@ -139,10 +153,7 @@ public class UserServiceImpl implements IUserService{
 
     @Override
     public UserResponse updateAccount(AccountEditRequest accountEditRequest) throws NotFoundException, RequestErrorException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsCustom userDetailsCustom = (UserDetailsCustom) authentication.getPrincipal();
-        User user = userRepository.findById(userDetailsCustom.getId()).orElseThrow(() -> new NotFoundException("user not found"));
-        user.setEmail(accountEditRequest.getEmail());
+        User user = userRepository.findByEmail(accountEditRequest.getEmail());
         user.setFullName(accountEditRequest.getFullName());
         if(!Objects.equals(user.getPhone(), accountEditRequest.getPhone())){
             if(userRepository.existsByPhone(accountEditRequest.getPhone())){
@@ -153,7 +164,7 @@ public class UserServiceImpl implements IUserService{
         }
         user.setPhone(accountEditRequest.getPhone());
         user.setUpdatedAt(LocalDate.now());
-        user.setAvatar(accountEditRequest.getAvatar());
+        user.setAvatar(uploadService.uploadFileToServer(accountEditRequest.getAvatar()));
         userRepository.save(user);
         return toUserResponse(user);
     }
@@ -180,7 +191,6 @@ public class UserServiceImpl implements IUserService{
         if (user == null) {
             return null; // Nếu user là null, trả về null để tránh lỗi
         }
-
         // Sử dụng Builder của UserResponse để tạo một đối tượng mới
         return UserResponse.builder()
                 .username(user.getUsername())

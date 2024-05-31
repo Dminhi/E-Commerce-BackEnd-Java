@@ -36,6 +36,7 @@ public class APIControllerAdvice {
     }
 
     @ExceptionHandler(CustomException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public Map<String, Object> customException(CustomException c) {
         Map<String, Object> map = new HashMap<>();
         map.put("error" ,new ResponseError(c.getHttpStatus().value(), c.getHttpStatus().name(),c.getMessage()));
