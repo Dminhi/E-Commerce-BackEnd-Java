@@ -3,6 +3,7 @@ package com.ra.service.brand;
 import com.ra.exception.CustomException;
 import com.ra.model.dto.request.BrandRequestDTO;
 import com.ra.model.dto.response.BrandResponseDTO;
+import com.ra.model.entity.Brand;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -21,4 +22,7 @@ public interface IBrandService {
     ResponseEntity<?> edit(Long id, BrandRequestDTO brandRequestDTO) throws CustomException;
     BrandResponseDTO findById(Long id) throws CustomException;
     ResponseEntity<?> getBrandById(Long id) throws CustomException;
+
+    ResponseEntity<?> changeStatus(Long id);
+    Brand findBrandByBrandName(String brandName) throws CustomException;
 }

@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -21,5 +22,6 @@ public class JWTResponse {
     private Collection<? extends GrantedAuthority> roleSet;
     private boolean status;
     private String phone;
+    private List<Long> wishList;
 }
 

@@ -1,12 +1,19 @@
 package com.ra.controller.user;
 
+import com.ra.config.ConvertPageToPaginationDTO;
 import com.ra.exception.AccountLockedException;
 import com.ra.exception.NotFoundException;
 import com.ra.model.dto.request.WishListRequest;
 import com.ra.model.dto.response.WishListResponse;
+import com.ra.model.dto.responsewapper.EHttpStatus;
+import com.ra.model.dto.responsewapper.ResponseWapper;
 import com.ra.service.wishlist.IWishListService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +32,13 @@ public class WishListController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<WishListResponse>> findAll(){
-        List<WishListResponse> wishListResponses = wishListService.findAll();
-        return new ResponseEntity<>(wishListResponses,HttpStatus.OK);
+    public ResponseEntity<?> findAll(@PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable){
+        Page<WishListResponse> wishListResponses = wishListService.findAll(pageable);
+        return new ResponseEntity<>(new ResponseWapper<>(
+                EHttpStatus.SUCCESS,
+                HttpStatus.OK.name(),
+                HttpStatus.OK.value(),
+                ConvertPageToPaginationDTO.convertPageToPaginationDTO(wishListResponses)), HttpStatus.OK);
     }
 
     @DeleteMapping("/{wishListId}")

@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -57,7 +58,7 @@ public class User {
     private Set<CartItem> cartItems;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private Set<WishlistItem> wishlists;
+    private Set<WishList> wishlists;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private Set<Orders> order;
@@ -65,4 +66,5 @@ public class User {
     @JsonIgnore
     private Set<Comment> reviews;
     private double point;
+
 }

@@ -20,10 +20,10 @@ public class Product {
     private String sku;
     private String productName;
     private String description;
-    private int stock;
     private LocalDate createdAt;
     private boolean status;
     private LocalDate updatedAt;
+    private String image;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
@@ -42,4 +42,10 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<WishList> wishLists;
+
+
 }

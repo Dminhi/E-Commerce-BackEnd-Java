@@ -4,6 +4,7 @@ import com.ra.exception.CustomException;
 import com.ra.model.dto.mapper.PageDataDTO;
 import com.ra.model.dto.request.CategoryRequestDTO;
 import com.ra.model.dto.response.CategoryResponseDTO;
+import com.ra.model.entity.Category;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,8 @@ public interface ICategoryService {
     ResponseEntity<?> edit(Long id, CategoryRequestDTO categoryRequestDTO) throws CustomException;
     CategoryResponseDTO findById(Long id) throws CustomException;
     ResponseEntity<?> getCategoryById(Long id) throws CustomException;
+
     ResponseEntity<?> changeStatus(Long id) throws CustomException;
+    Category findCategoryByCategoryName(String categoryName) throws CustomException;
 
 }

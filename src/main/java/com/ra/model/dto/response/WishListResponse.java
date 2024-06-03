@@ -1,5 +1,6 @@
 package com.ra.model.dto.response;
 
+import com.ra.model.entity.Product;
 import lombok.*;
 
 @AllArgsConstructor
@@ -8,6 +9,5 @@ import lombok.*;
 @Setter
 @Builder
 public class WishListResponse {
-    private String productName;
-    private double unitPrice;
+    private Product product;
 }

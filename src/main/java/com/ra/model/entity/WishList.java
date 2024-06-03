@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -16,9 +18,12 @@ public class WishList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id",referencedColumnName = "id")
     private User user;
+
     @ManyToOne
-    @JoinColumn(name = "productId")
+    @JoinColumn(name = "product_id",referencedColumnName = "id")
     private Product product;
+
+    private LocalDate createdAt;
 }

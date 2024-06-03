@@ -16,6 +16,7 @@ import com.ra.repository.IUserRepository;
 import com.ra.security.jwt.JWTProvider;
 import com.ra.security.principle.UserDetailsCustom;
 import com.ra.service.UploadService;
+import com.ra.service.wishlist.IWishListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -45,6 +46,8 @@ public class UserServiceImpl implements IUserService{
     private JWTProvider jwtProvider;
     @Autowired
     private IUserRepository userRepository;
+    @Autowired
+    private IWishListService wishListService;
     @Override
     public boolean register(FormRegister formRegister) throws CustomException {
         if(userRepository.existsByUsername(formRegister.getUsername())) {
@@ -103,6 +106,7 @@ public class UserServiceImpl implements IUserService{
         }
         String accessToken = jwtProvider.generateAccessToken(detailsCustom);
         return JWTResponse.builder()
+                .wishList(wishListService.findProductIdByUserId(detailsCustom.getId()))
                 .phone(detailsCustom.getPhone())
                 .avatar(detailsCustom.getAvatar())
                 .email(detailsCustom.getEmail())
