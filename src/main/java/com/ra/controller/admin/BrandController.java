@@ -34,12 +34,12 @@ public class BrandController {
 
     @PostMapping("")
 
-    public ResponseEntity<?> addBrand ( @Valid @ModelAttribute("category") BrandRequestDTO brandRequestDTO) throws CustomException {
+    public ResponseEntity<?> addBrand ( @Valid @ModelAttribute("brand") BrandRequestDTO brandRequestDTO) throws CustomException {
 
         return brandService.save(brandRequestDTO);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> editCategory (@PathVariable Long id, @Valid @ModelAttribute("category")  BrandRequestDTO brandRequestDTO) throws CustomException {
+    public ResponseEntity<?> editBrand (@PathVariable Long id, @Valid @ModelAttribute("brand")  BrandRequestDTO brandRequestDTO) throws CustomException {
         return brandService.edit(id,brandRequestDTO);
 
     }

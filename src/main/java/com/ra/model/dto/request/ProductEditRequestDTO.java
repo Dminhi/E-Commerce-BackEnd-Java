@@ -20,6 +20,5 @@ public class ProductEditRequestDTO {
     private Long categoryId;
     private Long brandId;
     private Set<MultipartFile> imageSet;
-
     private LocalDate updatedAt = LocalDate.now();
 }

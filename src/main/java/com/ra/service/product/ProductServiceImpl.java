@@ -292,4 +292,10 @@ public class ProductServiceImpl implements IProductService{
                         responseDTOMap), HttpStatus.OK);
     }
 
+    @Override
+    public List<ProductResponseDTO> searchProducts(String brand, String category, Double minPrice, Double maxPrice) {
+        List<Product> list = productRepository.searchProducts(brand, category, minPrice, maxPrice);
+        return list.stream().map(ProductResponseDTO::new).toList();
+    }
+
 }

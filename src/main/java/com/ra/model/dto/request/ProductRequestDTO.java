@@ -30,8 +30,6 @@ public class ProductRequestDTO {
     private Long categoryId;
     private Long brandId;
     private Set<MultipartFile> imageSet;
-    private boolean status;
-//    private Set<Config> configSet;
-//    private Long colorId;
+    private boolean status=true;
     private LocalDate CreatedAt = LocalDate.now();
 }
