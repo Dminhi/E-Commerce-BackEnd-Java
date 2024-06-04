@@ -16,15 +16,13 @@ public class CommentResponseDTO {
     private Long id;
     private String review;
     private String product;
-    private double rating;
     private String user;
     private boolean status;
 
     public CommentResponseDTO(Comment comment) {
         this.id = comment.getId();
-        this.review = comment.getReview();
+        this.review = comment.getComment();
         this.product = comment.getProduct().getProductName();
-        this.rating = comment.getRating();
         this.user = comment.getUser().getUsername();
         this.status = comment.isStatus();
     }
