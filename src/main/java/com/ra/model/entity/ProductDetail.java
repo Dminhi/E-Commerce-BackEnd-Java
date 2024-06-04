@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @NoArgsConstructor
@@ -33,4 +34,11 @@ public class ProductDetail {
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
     private Product product;
+
+    @OneToMany(mappedBy = "productDetail",fetch = FetchType.EAGER )
+    @JsonIgnore
+    private List<Review> feedbacks;
+    @OneToMany(mappedBy = "productDetail", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<OrderDetail> orderDetail;
 }

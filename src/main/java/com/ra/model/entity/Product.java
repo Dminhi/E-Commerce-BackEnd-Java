@@ -30,9 +30,7 @@ public class Product {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "brand_id", referencedColumnName = "id")
     private Brand brand;
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private List<OrderDetail> orderDetail;
+
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Image> images;

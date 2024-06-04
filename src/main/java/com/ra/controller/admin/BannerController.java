@@ -30,7 +30,7 @@ public class BannerController {
     private IBannerService bannerService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addBanner(@ModelAttribute BannerRequest bannerRequest) throws CustomException {
+    public ResponseEntity<?> addBanner(@Valid @ModelAttribute BannerRequest bannerRequest) throws CustomException {
         return bannerService.save(bannerRequest);
     }
 

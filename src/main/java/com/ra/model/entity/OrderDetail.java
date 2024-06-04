@@ -16,7 +16,7 @@ public class OrderDetail {
     private int id;
     @ManyToOne
     @JoinColumn(name = "product", referencedColumnName = "id")
-    private Product product;
+    private ProductDetail productDetail;
     private double unitPrice;
     private int oderQuantity;
     @ManyToOne

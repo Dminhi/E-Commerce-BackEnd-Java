@@ -166,9 +166,11 @@ public class UserServiceImpl implements IUserService{
             else {
                 user.setPhone(accountEditRequest.getPhone());}
         }
-        user.setPhone(accountEditRequest.getPhone());
         user.setUpdatedAt(LocalDate.now());
-        user.setAvatar(uploadService.uploadFileToServer(accountEditRequest.getAvatar()));
+        if (accountEditRequest.getAvatar() != null && !accountEditRequest.getAvatar().isEmpty()) {
+            String uploadedAvatarUrl = uploadService.uploadFileToServer(accountEditRequest.getAvatar());
+            user.setAvatar(uploadedAvatarUrl);
+        }
         userRepository.save(user);
         return toUserResponse(user);
     }
