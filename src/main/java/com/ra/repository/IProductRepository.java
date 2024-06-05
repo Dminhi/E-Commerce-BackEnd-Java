@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -24,4 +25,14 @@ public interface IProductRepository extends JpaRepository<Product,Long> {
     @Modifying
     @Query("SELECT p FROM Product p ORDER BY p.createdAt DESC")
     List<Product> findByOrderByCreatedAtDesc();
+
+    @Query("SELECT p FROM Product p JOIN p.productDetails pd WHERE " +
+            "(:brand IS NULL OR LOWER(p.brand.brandName) LIKE LOWER(CONCAT('%', :brand, '%'))) AND " +
+            "(:category IS NULL OR LOWER(p.category.categoryName) LIKE LOWER(CONCAT('%', :category, '%'))) AND " +
+            "(:minPrice IS NULL OR pd.unitPrice >= :minPrice) AND " +
+            "(:maxPrice IS NULL OR pd.unitPrice <= :maxPrice)")
+    List<Product> searchProducts(@Param("brand") String brand,
+                                 @Param("category") String category,
+                                 @Param("minPrice") Double minPrice,
+                                 @Param("maxPrice") Double maxPrice);
 }

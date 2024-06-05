@@ -7,6 +7,16 @@ import com.ra.model.dto.request.ProductRequestDTO;
 import com.ra.model.dto.response.*;
 import com.ra.model.entity.*;
 import com.ra.repository.*;
+import com.ra.model.dto.request.SearchCriteria;
+import com.ra.model.dto.response.*;
+import com.ra.model.entity.Brand;
+import com.ra.model.entity.Category;
+import com.ra.model.entity.Color;
+import com.ra.model.entity.Product;
+import com.ra.repository.IBrandRepository;
+import com.ra.repository.ICategoryRepository;
+import com.ra.repository.IColorRepository;
+import com.ra.repository.IProductRepository;
 import com.ra.service.product.IProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,17 +40,22 @@ public class HomeController {
     private IBrandRepository brandRepository;
     @Autowired
     private IColorRepository colorRepository;
-    @Autowired
-    private ImageRepository imageRepository;
-    @Autowired
-    private ICommentRepository commentRepository;
+
+    @GetMapping("/products/new-products")
+    public ResponseEntity<?> getProduct() throws CustomException {
+        List<Product> products =productRepository.findAll();
+        List<HomeProductResponseDTO>responseDTOMap = products.stream().map(HomeProductResponseDTO::new).toList();
+        return new ResponseEntity<>(
+                new ResponseMapper<>(
+                        HttpResponse.SUCCESS,
+                        HttpStatus.OK.value(),
+                        HttpStatus.OK.name(),
+                        responseDTOMap), HttpStatus.OK);
+
+    }
     @GetMapping("/products/{id}")
     public ResponseEntity<?> getProductDetail(@PathVariable  Long id) throws CustomException {
         Product products =productRepository.findById(id).orElseThrow(() -> new CustomException(("Product not found"),HttpStatus.NOT_FOUND));
-        List<Image> images = imageRepository.findByProductId(id);
-        List<Comment> comments = commentRepository.findByProductId(id);
-        products.setImages(images);
-        products.setComments(comments);
         HomeProductResponseDTO responseDTOMap = new HomeProductResponseDTO(products);
         return new ResponseEntity<>(
                 new ResponseMapper<>(
@@ -48,6 +63,7 @@ public class HomeController {
                         HttpStatus.OK.value(),
                         HttpStatus.OK.name(),
                         responseDTOMap), HttpStatus.OK);
+
 
     }
     @GetMapping("/categories/new-categories")

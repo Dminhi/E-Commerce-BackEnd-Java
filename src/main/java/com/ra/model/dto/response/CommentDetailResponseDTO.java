@@ -1,10 +1,7 @@
 package com.ra.model.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ra.model.entity.Comment;
-import com.ra.model.entity.Product;
-import com.ra.model.entity.User;
-import jakarta.persistence.*;
+import com.ra.model.entity.CommentDetail;
 import lombok.*;
 
 @NoArgsConstructor
@@ -12,19 +9,18 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-public class CommentResponseDTO {
+public class CommentDetailResponseDTO {
     private Long id;
+    private String reviewParent;
     private String review;
-    private String product;
+    private double rating;
     private String user;
     private boolean status;
-
-    public CommentResponseDTO(Comment comment) {
+    public CommentDetailResponseDTO(CommentDetail comment) {
         this.id = comment.getId();
-        this.review = comment.getComment();
-        this.product = comment.getProduct().getProductName();
+        this.reviewParent = comment.getComment().getComment();
+        this.review = comment.getReview();
         this.user = comment.getUser().getUsername();
         this.status = comment.isStatus();
     }
 }
-

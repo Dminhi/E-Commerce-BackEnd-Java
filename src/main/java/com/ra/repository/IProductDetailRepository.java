@@ -14,7 +14,6 @@ import java.util.List;
 
 @Transactional
 public interface IProductDetailRepository extends JpaRepository<ProductDetail,Long> {
-    Page<ProductDetail> findProductDetailByProductDetailName(String name, Pageable pageable);
     boolean existsByProductDetailName(String productDetailName);
     Page<ProductDetail> findAllByProductDetailNameContainingIgnoreCase( String name,Pageable pageable);
 

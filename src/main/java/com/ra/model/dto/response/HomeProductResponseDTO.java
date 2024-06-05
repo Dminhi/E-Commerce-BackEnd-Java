@@ -1,10 +1,14 @@
 package com.ra.model.dto.response;
 
-import com.ra.model.entity.*;
+import com.ra.model.entity.Config;
+import com.ra.model.entity.Product;
+import com.ra.model.entity.ProductDetail;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @NoArgsConstructor
@@ -22,10 +26,9 @@ public class HomeProductResponseDTO {
     private String brand;
     private boolean status;
     private LocalDate createdAt;
-    private List<Image> imageList;
-    private List<ProductDetailResponseDTO> productDetails;
-    private List<CommentResponseDTO> comments;
 
+    private List<ProductDetail> productDetailResponseDTOSet;
+    private List<Config> configList;
     public HomeProductResponseDTO(Product product) {
         this.id = product.getId();
         this.sku = product.getSku();
@@ -36,12 +39,14 @@ public class HomeProductResponseDTO {
         this.brand = product.getBrand().getBrandName();
         this.status = product.isStatus();
         this.createdAt = product.getCreatedAt();
-        this.imageList = product.getImages();
-        this.productDetails = product.getProductDetails().stream()
-                .map(ProductDetailResponseDTO::new)
-                .collect(Collectors.toList());
-        this.comments = product.getComments().stream()
-                .map(CommentResponseDTO::new)
+
+        this.productDetailResponseDTOSet = product.getProductDetails();
+
+        // Chuyển đổi danh sách ProductDetail thành danh sách Config
+        this.configList = product.getProductDetails().stream()
+                .map(ProductDetail::getConfigs)
+                .flatMap(Set::stream)
                 .collect(Collectors.toList());
     }
+
 }

@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,22 +12,17 @@ import java.util.Set;
 @Setter
 @Entity
 @Builder
-public class Comment {
+public class CommentDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String comment;
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    @JsonIgnore
-    private Product product;
+    private String review;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     private boolean status;
     private LocalDateTime createdAt;
-
-    @OneToMany(mappedBy = "comment" ,fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Set<CommentDetail> commentDetails;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "comment_id", referencedColumnName = "id")
+    private Comment comment;
 }
