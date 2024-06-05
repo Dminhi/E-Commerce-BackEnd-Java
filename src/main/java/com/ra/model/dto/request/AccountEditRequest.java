@@ -9,18 +9,19 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class AccountEditRequest {
-    @NotEmpty(message = "Thuộc tính không được để trống.")
-    @Size(max = 100, message = "Độ dài tối đa là 100 ký tự.")
+//    @NotEmpty(message = "Thuộc tính không được để trống.")
+//    @Size(max = 100, message = "Độ dài tối đa là 100 ký tự.")
     private String fullName;
-    @Email(message = "Email không hợp lệ.")
-    @NameExist(entityClass = User.class,existName = "email")
+//    @Email(message = "Email không hợp lệ.")
+//    @NameExist(entityClass = User.class,existName = "email")
     private String email;
-    private String avatar;
+    private MultipartFile avatar;
     private String phone;
 }

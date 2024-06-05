@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,7 @@ public class HomeProductResponseDTO {
     private String brand;
     private boolean status;
     private LocalDate createdAt;
+
     private List<ProductDetail> productDetailResponseDTOSet;
     private List<Config> configList;
     public HomeProductResponseDTO(Product product) {
@@ -37,6 +39,7 @@ public class HomeProductResponseDTO {
         this.brand = product.getBrand().getBrandName();
         this.status = product.isStatus();
         this.createdAt = product.getCreatedAt();
+
         this.productDetailResponseDTOSet = product.getProductDetails();
 
         // Chuyển đổi danh sách ProductDetail thành danh sách Config

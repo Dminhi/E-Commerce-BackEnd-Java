@@ -17,9 +17,11 @@ import java.util.List;
 public class UserDetailsCustom implements UserDetails {
     private Long id;
     private String username;
+    private String phone;
     private String fullName;
     private String email;
     private String password;
+    private String avatar;
     private boolean status;
     private Collection<? extends GrantedAuthority> authorities;
     public static UserDetailsCustom build(User user){
@@ -27,6 +29,8 @@ public class UserDetailsCustom implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName().name())).toList();
         return UserDetailsCustom.builder()
                 .id(user.getId())
+                .avatar(user.getAvatar())
+                .phone(user.getPhone())
                 .username(user.getUsername())
                 .password(user.getPassword())
                 .fullName(user.getFullName())

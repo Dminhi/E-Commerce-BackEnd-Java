@@ -1,8 +1,6 @@
 package com.ra.service.userService;
 
-import com.ra.exception.DataNotFound;
-import com.ra.exception.NotFoundException;
-import com.ra.exception.RequestErrorException;
+import com.ra.exception.*;
 import com.ra.model.dto.request.AccountEditPassword;
 import com.ra.model.dto.request.AccountEditRequest;
 import com.ra.model.dto.request.FormLogin;
@@ -16,8 +14,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface IUserService {
-      boolean register(FormRegister formRegister);
-        JWTResponse login(FormLogin formLogin);
+      boolean register(FormRegister formRegister) throws CustomException;
+        JWTResponse login(FormLogin formLogin) throws NotFoundException, AccountLockedException;
 
     Page<User> findAll(Pageable pageable);
 

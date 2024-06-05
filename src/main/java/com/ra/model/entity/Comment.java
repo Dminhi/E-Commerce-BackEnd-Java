@@ -27,6 +27,7 @@ public class Comment {
     private User user;
     private boolean status;
     private LocalDateTime createdAt;
+
     @OneToMany(mappedBy = "comment" ,fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<CommentDetail> commentDetails;

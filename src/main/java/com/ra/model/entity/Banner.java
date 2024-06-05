@@ -1,12 +1,13 @@
 package com.ra.model.entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,18 +15,13 @@ import java.util.Set;
 @Setter
 @Builder
 @Entity
-public class Coupons {
+public class Banner {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String code;
-    private String discount;
-    private LocalDate startDate;
-    private LocalDate endDate;
-    private int quantity;
+    private String bannerName;
+    private String description;
+    private String image;
+    private LocalDate createdAt;
     private boolean status = true;
-    @OneToMany(mappedBy = "coupons")
-    @JsonIgnore
-    private Set<Orders> orders;
 }

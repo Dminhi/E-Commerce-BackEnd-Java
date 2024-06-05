@@ -27,3 +27,4 @@ public class CommentResponseDTO {
         this.status = comment.isStatus();
     }
 }
+

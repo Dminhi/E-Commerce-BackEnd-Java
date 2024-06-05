@@ -4,6 +4,9 @@ import com.ra.exception.CustomException;
 import com.ra.model.dto.mapper.HttpResponse;
 import com.ra.model.dto.mapper.ResponseMapper;
 import com.ra.model.dto.request.ProductRequestDTO;
+import com.ra.model.dto.response.*;
+import com.ra.model.entity.*;
+import com.ra.repository.*;
 import com.ra.model.dto.request.SearchCriteria;
 import com.ra.model.dto.response.*;
 import com.ra.model.entity.Brand;
@@ -37,6 +40,7 @@ public class HomeController {
     private IBrandRepository brandRepository;
     @Autowired
     private IColorRepository colorRepository;
+
     @GetMapping("/products/new-products")
     public ResponseEntity<?> getProduct() throws CustomException {
         List<Product> products =productRepository.findAll();
@@ -60,17 +64,17 @@ public class HomeController {
                         HttpStatus.OK.name(),
                         responseDTOMap), HttpStatus.OK);
 
+
     }
     @GetMapping("/categories/new-categories")
     public ResponseEntity<?> getCategory() throws CustomException {
         List<Category> categories =categoryRepository.findAll();
         List<CategoryResponseDTO>responseDTOMap = categories.stream().map(CategoryResponseDTO::new).toList();
-        return new ResponseEntity<>(
-                new ResponseMapper<>(
-                        HttpResponse.SUCCESS,
-                        HttpStatus.OK.value(),
-                        HttpStatus.OK.name(),
-                        responseDTOMap), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseMapper<>(
+                HttpResponse.SUCCESS,
+                HttpStatus.OK.value(),
+                HttpStatus.OK.name(),
+                responseDTOMap), HttpStatus.OK);
 
     }
     @GetMapping("/brands/new-brands")
@@ -97,13 +101,5 @@ public class HomeController {
                         responseDTOMap), HttpStatus.OK);
 
     }
-    @PostMapping("/search")
-    public ResponseEntity<List<ProductResponseDTO>> searchProducts(@RequestBody SearchCriteria searchCriteria) {
-        List<ProductResponseDTO> products = productService.searchProducts(
-                searchCriteria.getBrand(),
-                searchCriteria.getCategory(),
-                searchCriteria.getMinPrice(),
-                searchCriteria.getMaxPrice());
-        return ResponseEntity.ok(products);
-    }
+
 }

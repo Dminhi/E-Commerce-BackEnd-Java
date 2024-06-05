@@ -1,6 +1,7 @@
 package com.ra.controller.admin;
 
 import com.ra.config.ConvertPageToPaginationDTO;
+import com.ra.exception.CustomException;
 import com.ra.exception.DataNotFound;
 import com.ra.exception.NotFoundException;
 import com.ra.exception.RequestErrorException;
@@ -20,7 +21,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,7 +30,7 @@ public class AccountController {
     private IUserService userService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> doAdd(@RequestBody FormRegister formRegister){
+    public ResponseEntity<?> doAdd(@RequestBody FormRegister formRegister) throws CustomException {
         boolean check = userService.register(formRegister);
         if (check){
             Map<String,String> map = new HashMap<>();
