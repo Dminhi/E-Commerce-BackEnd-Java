@@ -1,14 +1,12 @@
-package com.ra.service.review;
+package com.ra.service.comment;
 
 import com.ra.exception.CustomException;
 import com.ra.model.dto.mapper.HttpResponse;
 import com.ra.model.dto.mapper.PageDataDTO;
 import com.ra.model.dto.mapper.ResponseMapper;
 import com.ra.model.dto.response.CommentResponseDTO;
-import com.ra.model.dto.response.ProductResponseDTO;
 import com.ra.model.entity.Comment;
-import com.ra.model.entity.Product;
-import com.ra.repository.IReviewRepository;
+import com.ra.repository.ICommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,9 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReviewServiceImpl implements IReviewService{
+public class CommentServiceImpl implements ICommentService {
     @Autowired
-    private IReviewRepository reviewRepository;
+    private ICommentRepository reviewRepository;
     @Override
     public ResponseEntity<?> getReviews(String keyword, int page, int limit, String sort, String order) throws CustomException {
         Sort.Direction direction = order.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
@@ -62,7 +60,7 @@ public class ReviewServiceImpl implements IReviewService{
 
     @Override
     public Page<CommentResponseDTO> searchByNameWithPaginationAndSort(Pageable pageable, String name) {
-        Page<Comment> list = reviewRepository.findByReviewContaining( name, pageable);
+        Page<Comment> list = reviewRepository.findByCommentContaining( name, pageable);
         return list.map(CommentResponseDTO::new);
     }
 
@@ -75,10 +73,10 @@ public class ReviewServiceImpl implements IReviewService{
                     HttpResponse.SUCCESS,
                     HttpStatus.OK.value(),
                     HttpStatus.OK.name(),
-                    "Reviews change successfully !!\""
+                    "Comment change successfully !!\""
             ), HttpStatus.OK);
         } else {
-            throw  new CustomException("Reviews is not found with this id " + id, HttpStatus.NOT_FOUND);
+            throw  new CustomException("Comment is not found with this id " + id, HttpStatus.NOT_FOUND);
         }
 
     }

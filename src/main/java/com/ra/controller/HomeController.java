@@ -49,6 +49,18 @@ public class HomeController {
                         responseDTOMap), HttpStatus.OK);
 
     }
+    @GetMapping("/products/{id}")
+    public ResponseEntity<?> getProductDetail(@PathVariable  Long id) throws CustomException {
+        Product products =productRepository.findById(id).orElseThrow(() -> new CustomException(("Product not found"),HttpStatus.NOT_FOUND));
+        HomeProductResponseDTO responseDTOMap = new HomeProductResponseDTO(products);
+        return new ResponseEntity<>(
+                new ResponseMapper<>(
+                        HttpResponse.SUCCESS,
+                        HttpStatus.OK.value(),
+                        HttpStatus.OK.name(),
+                        responseDTOMap), HttpStatus.OK);
+
+    }
     @GetMapping("/categories/new-categories")
     public ResponseEntity<?> getCategory() throws CustomException {
         List<Category> categories =categoryRepository.findAll();

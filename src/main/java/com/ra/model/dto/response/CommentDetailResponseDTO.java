@@ -18,7 +18,7 @@ public class CommentDetailResponseDTO {
     private boolean status;
     public CommentDetailResponseDTO(CommentDetail comment) {
         this.id = comment.getId();
-        this.reviewParent = comment.getComment().getReview();
+        this.reviewParent = comment.getComment().getComment();
         this.review = comment.getReview();
         this.user = comment.getUser().getUsername();
         this.status = comment.isStatus();

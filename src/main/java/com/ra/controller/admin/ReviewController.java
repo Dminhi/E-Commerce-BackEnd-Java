@@ -1,7 +1,7 @@
 package com.ra.controller.admin;
 
 import com.ra.exception.CustomException;
-import com.ra.service.review.IReviewService;
+import com.ra.service.comment.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api.myservice.com/v1/admin/reviews")
 public class ReviewController {
     @Autowired
-    private IReviewService reviewService;
+    private ICommentService reviewService;
 
 
     @GetMapping("")
