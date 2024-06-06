@@ -34,8 +34,8 @@ public class OrdersController {
                 HttpStatus.OK.value(),
                 orderResponse), HttpStatus.OK);}
 
-    @PutMapping("/{orderId}/status")
-    public ResponseEntity<?> updateOrderStatus(@PathVariable Long orderId, @RequestParam String orderStatus ) throws NotFoundException {
+    @PutMapping("/status")
+    public ResponseEntity<?> updateOrderStatus(@RequestParam String orderStatus,Long orderId) throws NotFoundException {
         OrderResponse orderResponse = orderService.updateOrderStatus(orderId, Status.valueOf(orderStatus));
         return new ResponseEntity<>(new ResponseWapper<>(
                 EHttpStatus.SUCCESS,
@@ -52,4 +52,13 @@ public class OrdersController {
                 HttpStatus.OK.value(),
                 ConvertPageToPaginationDTO.convertPageToPaginationDTO(orderResponseo)), HttpStatus.OK);
     }
+
+    @GetMapping("")
+    public ResponseEntity<?> getAllOrder(@PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) throws DataNotFound, NotFoundException {
+        Page<OrderResponse> orderResponse = orderService.getAllOrder(pageable);
+        return new ResponseEntity<>(new ResponseWapper<>(
+                EHttpStatus.SUCCESS,
+                HttpStatus.OK.name(),
+                HttpStatus.OK.value(),
+                orderResponse), HttpStatus.OK);}
 }

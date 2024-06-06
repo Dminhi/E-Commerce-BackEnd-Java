@@ -13,6 +13,8 @@ import java.util.List;
 @Setter
 @Builder
 public class OrderResponse {
+    private Long orderId;
+    private String userName;
     private Double totalPrice;
     private String serialNumber;
     private Status orderStatus;

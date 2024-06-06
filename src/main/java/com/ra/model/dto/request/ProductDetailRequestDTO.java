@@ -21,7 +21,7 @@ public class ProductDetailRequestDTO {
     private MultipartFile image;
     private int stock;
     private Long colorId;
-    private Set<ConfigRequestDTO> configs;
     private Long productId;
     private boolean status = true;
+    private Set<ConfigRequestDTO> configs;
 }

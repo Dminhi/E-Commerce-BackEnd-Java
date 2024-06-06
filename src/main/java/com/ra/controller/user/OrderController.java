@@ -14,10 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,8 +44,8 @@ public class OrderController {
                 orderResponse), HttpStatus.OK);
     }
 
-    @GetMapping("order/{orderStatus}")
-    public ResponseEntity<?> getOrderByOrderStatus(@PathVariable String orderStatus, @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) throws NotFoundException, DataNotFound {
+    @GetMapping("/order")
+    public ResponseEntity<?> getOrderByOrderStatus(@RequestParam String orderStatus, @PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) throws NotFoundException, DataNotFound {
         Page<OrderResponse> orderResponse = orderService.getOrderResponseByOrderStatusByUser(orderStatus, pageable);
         return new ResponseEntity<>(new ResponseWapper<>(
                 EHttpStatus.SUCCESS,

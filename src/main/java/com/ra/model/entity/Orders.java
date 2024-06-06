@@ -2,10 +2,7 @@ package com.ra.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@Builder
 public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

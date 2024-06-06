@@ -129,7 +129,9 @@ public class OrderServiceImpl implements IOrderService{
         try{
             Page<Orders> orders = orderRepository.findAll(pageable);
             List<OrderResponse> orderResponses = orders.stream().map(order->OrderResponse.builder()
+                    .orderId((order.getId()))
                     .orderStatus(order.getStatus())
+                    .userName(order.getUser().getFullName())
                     .serialNumber(order.getSerialNumber())
                     .totalPrice(order.getTotalPrice())
                     .createdAt(order.getCreatedAt())

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -16,7 +18,7 @@ public class Color {
     private Long id;
     private String colorName;
     private boolean status;
-    @OneToOne(mappedBy = "color", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "color", fetch = FetchType.EAGER)
     @JsonIgnore
-    private ProductDetail productDetail;
+    private List<ProductDetail> productDetail;
 }

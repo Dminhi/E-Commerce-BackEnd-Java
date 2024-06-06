@@ -22,7 +22,7 @@ public class ProductDetail {
     private String image;
     private String productDetailName;
     private int stock;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "color_id", referencedColumnName = "id")
     private Color color;
 
@@ -38,6 +38,7 @@ public class ProductDetail {
     @OneToMany(mappedBy = "productDetail",fetch = FetchType.EAGER )
     @JsonIgnore
     private List<Review> feedbacks;
+
     @OneToMany(mappedBy = "productDetail", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<OrderDetail> orderDetail;

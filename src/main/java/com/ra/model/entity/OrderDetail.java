@@ -11,9 +11,9 @@ import lombok.Setter;
 @Setter
 @Entity
 public class OrderDetail {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @EmbeddedId
+    private CompositeKey id;
+    private String orderDetailName;
     @ManyToOne
     @JoinColumn(name = "product", referencedColumnName = "id")
     private ProductDetail productDetail;
