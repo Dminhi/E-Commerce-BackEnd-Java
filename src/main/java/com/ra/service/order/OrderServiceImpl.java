@@ -40,6 +40,8 @@ public class OrderServiceImpl implements IOrderService{
         }
 
         return orders.map(order->OrderResponse.builder()
+                .userName(order.getUser().getUsername())
+                .orderId((order.getId()))
                 .orderStatus(order.getStatus())
                 .serialNumber(order.getSerialNumber())
                 .totalPrice(order.getTotalPrice())
@@ -179,6 +181,7 @@ public class OrderServiceImpl implements IOrderService{
 
         // Sử dụng Builder của OrderDetailDTO để tạo một đối tượng mới
         return OrderDetailDTO.builder()
+                .userName(orderDetail.getOrders().getUser().getFullName())
                 .productName(orderDetail.getProductDetail().getProduct().getProductName())
                 .quantity(orderDetail.getOderQuantity())
                 .price(orderDetail.getUnitPrice())

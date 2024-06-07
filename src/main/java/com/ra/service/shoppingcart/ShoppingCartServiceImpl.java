@@ -30,6 +30,8 @@ public class ShoppingCartServiceImpl implements IShoppingCartService{
     private IOrderDetailRepository orderDetailRepository;
     @Autowired
     private IOrderRepository orderRepository;
+    @Autowired
+    private ICouponRepository couponRepository;
 
     @Override
     public List<ShoppingCartResponse> findAll() {
@@ -122,6 +124,10 @@ public class ShoppingCartServiceImpl implements IShoppingCartService{
         List<ShoppingCart> shoppingCarts = shoppingCartRepository.findAllByUserId(userDetailsCustom.getId());
         Double totalPrice = shoppingCarts.stream().map(item -> item.getProductDetail().getUnitPrice()*item.getOrderQuantity()).reduce( 0.0,(sum, number)->sum+=number);
         String serialNumber = UUID.randomUUID().toString();
+        Optional<Coupons> coupons = couponRepository.findById(checkOutRequest.getCouponId());
+        if(coupons.isPresent()){
+            totalPrice = totalPrice*(1-Double.parseDouble(coupons.get().getDiscount()));
+        }
         Orders orders = Orders.builder()
                 .phone(checkOutRequest.getReceivePhone())
                 .streetAddress(checkOutRequest.getReceiveAddress())
@@ -130,6 +136,7 @@ public class ShoppingCartServiceImpl implements IShoppingCartService{
                 .note(checkOutRequest.getNote())
                 .createdAt(LocalDate.now())
                 .user(user)
+                .coupons(coupons.orElse(null))
                 .totalPrice(totalPrice)
                 .status(Status.WAITING)
                 .build();

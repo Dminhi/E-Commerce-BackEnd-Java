@@ -14,15 +14,15 @@ import lombok.*;
 @Builder
 public class CommentResponseDTO {
     private Long id;
-    private String review;
-    private String product;
+    private String comment;
+    private String productDetail;
     private String user;
     private boolean status;
 
     public CommentResponseDTO(Comment comment) {
         this.id = comment.getId();
-        this.review = comment.getComment();
-        this.product = comment.getProduct().getProductName();
+        this.comment = comment.getComment();
+        this.productDetail = comment.getProductDetail().getProductDetailName();
         this.user = comment.getUser().getUsername();
         this.status = comment.isStatus();
     }

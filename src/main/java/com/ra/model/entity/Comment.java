@@ -19,16 +19,16 @@ public class Comment {
     private Long id;
     private String comment;
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "productDetail_id")
     @JsonIgnore
-    private Product product;
+    private ProductDetail productDetail;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     private boolean status;
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "comment" ,fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Set<CommentDetail> commentDetails;
+//    @OneToMany(mappedBy = "comment" ,fetch = FetchType.EAGER)
+//    @JsonIgnore
+//    private Set<CommentDetail> commentDetails;
 }

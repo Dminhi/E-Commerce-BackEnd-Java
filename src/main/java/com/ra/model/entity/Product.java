@@ -37,9 +37,7 @@ public class Product {
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<ProductDetail> productDetails;
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private List<Comment> comments;
+
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     @JsonIgnore

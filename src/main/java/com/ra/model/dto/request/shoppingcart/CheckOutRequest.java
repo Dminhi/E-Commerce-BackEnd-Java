@@ -19,5 +19,6 @@ public class CheckOutRequest {
     private String receiveAddress;
     @NotNull(message = "receivePhone not be null")
     private String receivePhone;
+    private Long couponId;
     List<Long> shoppingCartId;
 }

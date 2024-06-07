@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api.myservice.com/v1/admin/commentDetail")
-public class CommentController {
+public class CommentsController {
     @Autowired
     private ICommentDetailService commentDetailService;
     @GetMapping("")

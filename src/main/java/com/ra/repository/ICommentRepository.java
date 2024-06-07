@@ -16,4 +16,6 @@ public interface ICommentRepository extends JpaRepository<Comment,Long> {
     @Modifying
     @Query("update Comment c set c.status=case when c.status = true then false else true end where c.id=?1")
     void changeStatus(Long id);
+
+    Page<Comment> findAllByProductDetailId(Long productDetailId,Pageable pageable);
 }

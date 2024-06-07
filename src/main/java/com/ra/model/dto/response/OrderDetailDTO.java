@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 @Builder
 public class OrderDetailDTO {
+    private String userName;
     private String productName;
     private int quantity;
     private double price;
