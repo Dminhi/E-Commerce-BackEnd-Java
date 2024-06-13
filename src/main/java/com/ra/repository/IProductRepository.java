@@ -13,7 +13,7 @@ import java.util.List;
 
 @Transactional
 public interface IProductRepository extends JpaRepository<Product,Long> {
-    Page<Product> findProductByProductName(String name, Pageable pageable);
+    Page<Product> findProductByProductName(String search, Pageable pageable);
 
     Page<Product> findAllByProductNameContainingIgnoreCase( String name,Pageable pageable);
 

@@ -304,4 +304,8 @@ public class ProductDetailServiceImpl implements IProductDetailService {
                         productDetailResponseDTO), HttpStatus.OK);
     }
 
+    @Override
+    public ProductDetail findProductDetailById(Long id) throws CustomException {
+        return productDetailRepository.findById(id).orElseThrow(() -> new CustomException("ProductDetail not found!! " + id, HttpStatus.NOT_FOUND));
+    }
 }

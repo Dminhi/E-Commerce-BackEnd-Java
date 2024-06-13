@@ -55,8 +55,8 @@ public class BannerController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<?> findUserByUsername(@RequestParam(required = false) String search) throws DataNotFound {
-        List<Banner> banners = bannerService.findBannerByBannername(search);
+    public ResponseEntity<?> findProductByBannername(@RequestParam(required = false) String search,@PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) throws DataNotFound {
+        Page<Banner> banners = bannerService.findAllByBannerName(search,pageable);
         return new ResponseEntity<>(new ResponseWapper<>(
                 EHttpStatus.SUCCESS,
                 HttpStatus.OK.name(),

@@ -6,6 +6,7 @@ import com.ra.model.dto.request.ProductEditRequestDTO;
 import com.ra.model.dto.request.ProductRequestDTO;
 import com.ra.model.dto.response.ProductDetailResponseDTO;
 import com.ra.model.dto.response.ProductResponseDTO;
+import com.ra.model.entity.ProductDetail;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,8 @@ public interface IProductDetailService {
     List<ProductDetailResponseDTO> findAllByStatus(boolean status);
 
     ResponseEntity<?> editProduct(Long id, ProductDetailRequestDTO productDetailRequestDTO) throws  CustomException;
+
+    ProductDetail findProductDetailById(Long id) throws CustomException;
 
 
 }

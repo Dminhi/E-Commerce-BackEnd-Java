@@ -125,10 +125,15 @@ public class ShoppingCartServiceImpl implements IShoppingCartService{
         Double totalPrice = shoppingCarts.stream().map(item -> item.getProductDetail().getUnitPrice()*item.getOrderQuantity()).reduce( 0.0,(sum, number)->sum+=number);
         String serialNumber = UUID.randomUUID().toString();
         Optional<Coupons> coupons = couponRepository.findById(checkOutRequest.getCouponId());
+        Double totalDiscountedPrice = 0.0;
+        Double totalPriceAfterCoupons = totalPrice;
         if(coupons.isPresent()){
-            totalPrice = totalPrice*(1-Double.parseDouble(coupons.get().getDiscount()));
+            totalPriceAfterCoupons = totalPrice*(1-Double.parseDouble(coupons.get().getDiscount()));
+             totalDiscountedPrice = totalPrice*Double.parseDouble(coupons.get().getDiscount());
         }
         Orders orders = Orders.builder()
+                .totalPriceAfterCoupons(totalPriceAfterCoupons)
+                .totalDiscountedPrice(totalDiscountedPrice)
                 .phone(checkOutRequest.getReceivePhone())
                 .streetAddress(checkOutRequest.getReceiveAddress())
                 .receiveName(checkOutRequest.getReceiveName())

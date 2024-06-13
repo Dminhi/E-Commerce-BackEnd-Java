@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface IBannerRepository extends JpaRepository<Banner,Long> {
-    List<Banner> findAllByBannerNameContains(String search);
     Page<Banner> findAllByStatusIsTrue(Pageable pageable);
     boolean existsByBannerName(String userName);
+    Page<Banner> findAllByBannerNameContains(String search,Pageable pageable);
 }

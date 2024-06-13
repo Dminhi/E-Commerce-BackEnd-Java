@@ -16,4 +16,7 @@ public interface IReviewRepository extends JpaRepository<Review,Long> {
     void changeReviewStatus(@Param("id") Long id);
 
     Page<Review> findAllByStatusIsTrue(Pageable pageable);
+
+    @Query(value = "SELECT AVG(rating) AS average_rating FROM review GROUP BY productDetail_id;",nativeQuery = true)
+    Long avgProductDetailRating();
 }

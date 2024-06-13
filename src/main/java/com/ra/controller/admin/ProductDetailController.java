@@ -1,10 +1,17 @@
 package com.ra.controller.admin;
 
 import com.ra.exception.CustomException;
+import com.ra.exception.DataNotFound;
+import com.ra.exception.NotFoundException;
 import com.ra.model.dto.request.ProductDetailRequestDTO;
+import com.ra.model.dto.responsewapper.EHttpStatus;
+import com.ra.model.dto.responsewapper.ResponseWapper;
+import com.ra.model.entity.Banner;
+import com.ra.model.entity.ProductDetail;
 import com.ra.service.productDetail.IProductDetailService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +41,16 @@ public class ProductDetailController {
     @PatchMapping("/{id}")
     public ResponseEntity<?> changeStatus (@PathVariable Long id) throws CustomException {
         return productDetailService.changeStatus(id);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findProductDetailById(@PathVariable Long id) throws CustomException {
+        ProductDetail productDetail = productDetailService.findProductDetailById(id);
+        return new ResponseEntity<>(new ResponseWapper<>(
+                EHttpStatus.SUCCESS,
+                HttpStatus.OK.name(),
+                HttpStatus.OK.value(),
+                productDetail), HttpStatus.OK);
     }
 
 }

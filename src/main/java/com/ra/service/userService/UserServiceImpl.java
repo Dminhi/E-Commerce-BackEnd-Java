@@ -110,6 +110,7 @@ public class UserServiceImpl implements IUserService{
                 .phone(detailsCustom.getPhone())
                 .avatar(detailsCustom.getAvatar())
                 .email(detailsCustom.getEmail())
+                .userId(detailsCustom.getId())
                 .fullName(detailsCustom.getFullName())
                 .roleSet(detailsCustom.getAuthorities())
                 .status(detailsCustom.isStatus())

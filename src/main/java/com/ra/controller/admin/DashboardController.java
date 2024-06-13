@@ -21,16 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class DashboardController {
     @Autowired
     private IDashBoardRepository dashBoardRepository;
-    @GetMapping("/user")
-    public Integer findUserQuantity() {
-        return dashBoardRepository.userQuantity();
-    }
-    @GetMapping("/productdetail")
-    public Integer findProductdetailQuantity() {
-        return dashBoardRepository.productDetailQuantity();
-    }
     @GetMapping("/order")
-    public Integer findOrderQuantity() {
+    public Integer findUserQuantity() {
         return dashBoardRepository.orderQuantity();
+    }
+    @GetMapping("/productdetailOrder")
+    public Integer findProductdetailQuantity() {
+        return dashBoardRepository.productDetailOrder();
+    }
+    @GetMapping("/revenue")
+    public Integer findOrderQuantity() {
+        return dashBoardRepository.revenue();
     }
 }

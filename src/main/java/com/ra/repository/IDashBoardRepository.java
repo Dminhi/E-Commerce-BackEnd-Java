@@ -7,10 +7,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IDashBoardRepository extends JpaRepository<User,Long>{
-    @Query("select COUNT(*) from User")
-    Integer userQuantity();
-    @Query("SELECT COUNT(*) FROM Orders WHERE MONTH(createdAt) = MONTH(now()) AND YEAR(createdAt) = YEAR(now())")
+    @Query("SELECT COUNT(*) FROM Orders")
     Integer orderQuantity();
-    @Query("select COUNT(*) from ProductDetail ")
-    Integer productDetailQuantity();
+    @Query(value = "SELECT SUM(totalPriceAfterCoupons) AS totalSum FROM Orders o WHERE o.status = 'SUCCESS'",nativeQuery = true)
+    Integer revenue();
+    @Query(value = "SELECT COUNT(od.productDetail_id) AS totalProductDetails FROM OrderDetail od JOIN Orders o ON od.orders_id = o.id WHERE o.status = 'SUCCESS'",nativeQuery = true)
+    Integer productDetailOrder();
 }

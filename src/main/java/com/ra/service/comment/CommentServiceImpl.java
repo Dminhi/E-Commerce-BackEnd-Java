@@ -7,10 +7,12 @@ import com.ra.model.dto.mapper.ResponseMapper;
 import com.ra.model.dto.request.CommentRequest;
 import com.ra.model.dto.response.CommentResponseDTO;
 import com.ra.model.entity.Comment;
+import com.ra.model.entity.User;
 import com.ra.repository.ICommentRepository;
 import com.ra.repository.IProductDetailRepository;
 import com.ra.repository.IProductRepository;
 import com.ra.repository.IUserRepository;
+import com.ra.security.principle.UserDetailsCustom;
 import com.ra.service.userService.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,9 +21,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CommentServiceImpl implements ICommentService {
@@ -99,9 +105,12 @@ public class CommentServiceImpl implements ICommentService {
         return new CommentResponseDTO(comment);
     }
 
+
     @Override
-    public Page<CommentResponseDTO> findAllByProductDetailId(Pageable pageable,Long productDetailId) {
-        Page<Comment> comments = commentRepository.findAllByProductDetailId(productDetailId,pageable);
+    public Page<CommentResponseDTO> findAllByProductDetailId(Pageable pageable,Long productDetailId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetailsCustom userDetailsCustom = (UserDetailsCustom) authentication.getPrincipal();
+        Page<Comment> comments = commentRepository.findAllByProductDetailId(productDetailId,userDetailsCustom.getId(),pageable);
         return comments.map(CommentResponseDTO::new);
     }
 
@@ -113,7 +122,10 @@ public class CommentServiceImpl implements ICommentService {
                 .createdAt(LocalDateTime.now())
                 .user(userRepository.findById(commentRequest.getUserId()).orElseThrow(() -> new CustomException("User is not found with this id " + commentRequest.getUserId(), HttpStatus.NOT_FOUND)))
                 .productDetail(productDetailRepository.findById(commentRequest.getProductDetailId()).orElseThrow(() -> new CustomException("ProductDetail is not found with this id " + commentRequest.getProductDetailId(), HttpStatus.NOT_FOUND)))
-                .status(true).build());
+                .status(false)
+                .commentStatus(false)
+                .build());
+
         return new ResponseEntity<>(
                 new ResponseMapper<>(HttpResponse.SUCCESS,
                         HttpStatus.CREATED.value(),

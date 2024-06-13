@@ -42,7 +42,7 @@ public class AccountController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> findAll(@PageableDefault(page = 0, size = 5, sort = "username", direction = Sort.Direction.ASC) Pageable pageable) {
+    public ResponseEntity<?> findAll(@PageableDefault(page = 0, size = 5, sort = "username", direction = Sort.Direction.DESC) Pageable pageable) {
         Page<User> users = userService.findAll(pageable);
         return new ResponseEntity<>(new ResponseWapper<>(
                 EHttpStatus.SUCCESS,

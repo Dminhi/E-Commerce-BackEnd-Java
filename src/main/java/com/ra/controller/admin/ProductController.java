@@ -1,13 +1,25 @@
 package com.ra.controller.admin;
 
 import com.ra.exception.CustomException;
+import com.ra.exception.DataNotFound;
 import com.ra.model.dto.request.ProductEditRequestDTO;
 import com.ra.model.dto.request.ProductRequestDTO;
+import com.ra.model.dto.response.ProductResponseDTO;
+import com.ra.model.dto.responsewapper.EHttpStatus;
+import com.ra.model.dto.responsewapper.ResponseWapper;
+import com.ra.model.entity.Banner;
+import com.ra.model.entity.Product;
 import com.ra.service.product.IProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api.myservice.com/v1/admin/products")
@@ -38,5 +50,12 @@ public class ProductController {
         return productService.changeStatus(id);
     }
 
-
+    @GetMapping("/search")
+    public ResponseEntity<?> findProductByProductName(@RequestParam(required = false) String search, Pageable pageable) {
+        Page<ProductResponseDTO> productPage = productService.searchByNameWithPaginationAndSort(search,pageable);
+        return new ResponseEntity<>(new ResponseWapper<>(
+                EHttpStatus.SUCCESS,
+                HttpStatus.OK.name(),
+                HttpStatus.OK.value(),
+                productPage), HttpStatus.OK);    }
 }

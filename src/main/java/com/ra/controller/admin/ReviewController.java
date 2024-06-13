@@ -8,6 +8,7 @@ import com.ra.model.dto.request.ReviewRequest;
 import com.ra.model.dto.responsewapper.EHttpStatus;
 import com.ra.model.dto.responsewapper.ResponseWapper;
 import com.ra.model.entity.Review;
+import com.ra.repository.IReviewRepository;
 import com.ra.service.review.IReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,9 @@ public class ReviewController {
     @Autowired
     private IReviewService reviewService;
 
+    @Autowired
+    private IReviewRepository reviewRepository;
+
     @GetMapping()
     public ResponseEntity<?> findAll(@PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) {
         Page<Review> reviews = reviewService.findAll(pageable);
@@ -35,6 +39,7 @@ public class ReviewController {
                 HttpStatus.OK.value(),
                 ConvertPageToPaginationDTO.convertPageToPaginationDTO(reviews)), HttpStatus.OK);
     }
+
     @PostMapping("/add")
     public ResponseEntity<?> addFeedBack(@RequestBody ReviewRequest reviewRequest) throws CustomException, NotFoundException {
         Review newReview = reviewService.save(reviewRequest);
@@ -52,5 +57,12 @@ public class ReviewController {
                 EHttpStatus.SUCCESS,
                 HttpStatus.OK.name(),
                 HttpStatus.OK.value(),
-                review), HttpStatus.OK);}
+                review), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/{id}")
+    public Long findRatingByProductDetailId() {
+        return reviewRepository.avgProductDetailRating();
+    }
 }

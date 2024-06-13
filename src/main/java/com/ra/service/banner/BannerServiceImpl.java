@@ -73,13 +73,6 @@ public class BannerServiceImpl implements IBannerService{
     }
 
     @Override
-    public List<Banner> findBannerByBannername(String search) throws DataNotFound {
-        List<Banner> findBannerByBannername = bannerRepository.findAllByBannerNameContains(search);
-        if(findBannerByBannername.isEmpty()){throw new DataNotFound("banner is empty");
-        }
-        return findBannerByBannername;}
-
-    @Override
     public Banner updateBanner(BannerEditRequest bannerEditRequest,Long id) throws NotFoundException, RequestErrorException {
         Banner banner = bannerRepository.findById(bannerEditRequest.getId()).orElseThrow(()->new NotFoundException("banner not found"));
         banner.setBannerName(bannerEditRequest.getBannerName());
@@ -106,4 +99,11 @@ public class BannerServiceImpl implements IBannerService{
     public Page<Banner> findAllByStatusTrue(Pageable pageable) {
         return bannerRepository.findAllByStatusIsTrue(pageable);
     }
-}
+
+    @Override
+    public Page<Banner> findAllByBannerName(String search, Pageable pageable) throws DataNotFound {
+        Page<Banner> findBannerByBannername = bannerRepository.findAllByBannerNameContains(search,pageable);
+        if(findBannerByBannername.isEmpty()){throw new DataNotFound("banner is empty");}
+        return findBannerByBannername;}
+    }
+

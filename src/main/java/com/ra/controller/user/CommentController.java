@@ -27,7 +27,7 @@ public class CommentController {
     private ICommentService commentService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findCommentByProductDetailId(@PathVariable Long id,@PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) throws NotFoundException, DataNotFound {
+    public ResponseEntity<?> findCommentByProductDetailId(@PathVariable Long id,@PageableDefault(page = 0, size = 5, sort = "createdAt", direction = Sort.Direction.ASC) Pageable pageable) throws  CustomException {
         Page<CommentResponseDTO> commentResponseDTO = commentService.findAllByProductDetailId(pageable,id);
         return new ResponseEntity<>(new ResponseWapper<>(
                 EHttpStatus.SUCCESS,

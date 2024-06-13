@@ -80,8 +80,8 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public Page<ProductResponseDTO> searchByNameWithPaginationAndSort(String name, Pageable pageable) {
-        Page<Product> list = productRepository.findProductByProductName( name, pageable);
+    public Page<ProductResponseDTO> searchByNameWithPaginationAndSort(String search, Pageable pageable) {
+        Page<Product> list = productRepository.findProductByProductName( search, pageable);
         return list.map(ProductResponseDTO::new);
     }
 

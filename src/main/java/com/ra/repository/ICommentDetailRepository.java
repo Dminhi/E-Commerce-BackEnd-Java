@@ -15,7 +15,6 @@ import java.util.List;
 public interface ICommentDetailRepository extends JpaRepository<CommentDetail,Long> {
     Page<CommentDetail> findAllByCommentId(Long id, Pageable pageable);
     @Modifying
-    @Query("update CommentDetail c set c.status=case when c.status = true then false else true end where c.id=?1")
+    @Query(value = "update CommentDetail c set c.status=case when c.status = true then false else true end where c.id=?1")
     void changeStatus(Long id);
-
 }

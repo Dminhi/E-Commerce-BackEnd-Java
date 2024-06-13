@@ -15,7 +15,7 @@ public interface ICommentService {
     ResponseEntity<?> changeStatus(Long id) throws CustomException;
     CommentResponseDTO findById(Long id) throws CustomException;
 
-    Page<CommentResponseDTO> findAllByProductDetailId(Pageable pageable,Long productDetailId);
+    Page<CommentResponseDTO> findAllByProductDetailId(Pageable pageable,Long productDetailId) throws CustomException;
 
     ResponseEntity<?> save(CommentRequest commentRequest) throws CustomException;
 

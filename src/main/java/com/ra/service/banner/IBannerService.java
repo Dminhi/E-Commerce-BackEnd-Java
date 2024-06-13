@@ -18,11 +18,12 @@ public interface IBannerService {
     Page<Banner> findAll(Pageable pageable);
     Banner changeStatus(Long id) throws NotFoundException, RequestErrorException;
 
-    List<Banner> findBannerByBannername(String search) throws DataNotFound;
 
     Banner updateBanner(BannerEditRequest bannerEditRequest,Long id) throws NotFoundException, RequestErrorException;
     Banner findBannerById(Long id) throws NotFoundException;
     ResponseEntity<?> save(BannerRequest bannerRequest) throws CustomException;
 
     Page<Banner> findAllByStatusTrue(Pageable pageable);
+
+    Page<Banner> findAllByBannerName(String search,Pageable pageable) throws DataNotFound;
 }
